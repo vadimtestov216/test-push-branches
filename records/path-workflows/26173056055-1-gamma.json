@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-05-20T15:37:02Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "workflow": "Path gamma",
+  "workflow_label": "gamma",
+  "event_name": "push",
+  "ref": "refs/heads/test-paths/alpha-then-gamma-head",
+  "ref_name": "test-paths/alpha-then-gamma-head",
+  "sha": "eb3e7ee374536a3c0cf259625c01896487b5a005",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "eb3e7ee374536a3c0cf259625c01896487b5a005",
+  "created": true,
+  "deleted": false,
+  "forced": false,
+  "compare": "https://github.com/vadimtestov216/test-push-branches/compare/992bf335b10e^...eb3e7ee37453",
+  "run_id": "26173056055",
+  "run_attempt": "1",
+  "actor": "vadimtestov216",
+  "commits_count": 2,
+  "commits": [
+    {
+      "id": "992bf335b10e32d008da4f4d46c0129746c342ca",
+      "message": "Add alpha ancestor path sample.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "added": [],
+      "modified": [],
+      "removed": []
+    },
+    {
+      "id": "eb3e7ee374536a3c0cf259625c01896487b5a005",
+      "message": "Add gamma head path sample.\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "added": [],
+      "modified": [],
+      "removed": []
+    }
+  ]
+}
