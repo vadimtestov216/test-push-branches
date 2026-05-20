@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-20T16:10:05Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "event_name": "push",
+  "ref": "refs/heads/generated/criss-cross-multiple-bases",
+  "ref_name": "generated/criss-cross-multiple-bases",
+  "sha": "bcd2c354d255975c90e6de088c9ba9963d5bba6e",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "bcd2c354d255975c90e6de088c9ba9963d5bba6e",
+  "run_id": "26174906238",
+  "run_attempt": "1",
+  "workflow": "Capture push before value",
+  "actor": "vadimtestov216"
+}
