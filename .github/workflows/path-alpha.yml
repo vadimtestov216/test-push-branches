@@ -1,0 +1,29 @@
+name: Path alpha
+
+on:
+  push:
+    branches-ignore:
+      - push-event-log
+    paths:
+      - alpha/**
+
+permissions:
+  contents: write
+
+concurrency:
+  group: push-event-log
+  cancel-in-progress: false
+
+jobs:
+  record:
+    name: Record alpha path match
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Append path workflow record
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PATH_WORKFLOW_LABEL: alpha
+        run: .github/scripts/append-path-workflow-log.sh
