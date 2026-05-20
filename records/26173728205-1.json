@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-20T15:48:49Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "event_name": "push",
+  "ref": "refs/heads/main",
+  "ref_name": "main",
+  "sha": "e5d35d01b830ae736ee5dc1c5f2b4006087150fa",
+  "before": "37dbdd45d218c7168ca459bfe27ab64338647f98",
+  "after": "e5d35d01b830ae736ee5dc1c5f2b4006087150fa",
+  "run_id": "26173728205",
+  "run_attempt": "1",
+  "workflow": "Capture push before value",
+  "actor": "vadimtestov216"
+}
