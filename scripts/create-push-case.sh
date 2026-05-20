@@ -87,7 +87,7 @@ checkout_case_branch() {
 
   git switch "${base_branch}"
   git pull --ff-only "${remote}" "${base_branch}"
-  git switch -c "${branch}"
+  git switch --no-track -c "${branch}"
 }
 
 write_case_file() {
@@ -289,7 +289,7 @@ create_merge_case() {
 
     local side_branch="${branch}-parent-${path//\//-}"
     require_branch_absent "${side_branch}"
-    git switch -c "${side_branch}" "${base_ref}"
+    git switch --no-track -c "${side_branch}" "${base_ref}"
 
     for ((i = 1; i <= count; i++)); do
       commit_case_file "${path}" "${name}" "parent-${path//\//-}" "${i}"
@@ -298,7 +298,7 @@ create_merge_case() {
     parent_branches+=("${side_branch}")
   done
 
-  git switch -c "${branch}" "${base_ref}"
+  git switch --no-track -c "${branch}" "${base_ref}"
   git merge --no-ff --no-edit "${parent_branches[@]}"
 
   if [[ "${head_count}" -gt 0 ]]; then
