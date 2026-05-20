@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-20T15:36:52Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "event_name": "push",
+  "ref": "refs/heads/test-paths/alpha-then-gamma-head",
+  "ref_name": "test-paths/alpha-then-gamma-head",
+  "sha": "eb3e7ee374536a3c0cf259625c01896487b5a005",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "eb3e7ee374536a3c0cf259625c01896487b5a005",
+  "run_id": "26173056050",
+  "run_attempt": "1",
+  "workflow": "Capture push before value",
+  "actor": "vadimtestov216"
+}
