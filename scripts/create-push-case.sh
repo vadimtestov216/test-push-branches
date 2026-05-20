@@ -448,9 +448,7 @@ create_criss_cross_force_case() {
 
   if [[ "${push_branch}" -eq 1 ]]; then
     git push -u "${remote}" "${branch}"
-    git branch -f "${branch}" "${right_final_tip}"
-    git switch "${branch}"
-    git push --force-with-lease "${remote}" "${branch}"
+    git push --force-with-lease "${remote}" "${right_final_tip}:refs/heads/${branch}"
   else
     echo
     echo "Skipped push. To run the force-push test manually:"
