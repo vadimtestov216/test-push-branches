@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore:
       - push-event-log
+      - path-event-log-*
     paths:
       - beta/**
 
@@ -11,7 +12,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: push-event-log
+  group: path-event-log-beta
   cancel-in-progress: false
 
 jobs:

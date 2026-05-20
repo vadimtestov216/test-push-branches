@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-log_branch="${LOG_BRANCH:-push-event-log}"
 workflow_label="${PATH_WORKFLOW_LABEL:?PATH_WORKFLOW_LABEL is required}"
+log_branch="${LOG_BRANCH:-path-event-log-${workflow_label}}"
 record_dir="$(mktemp -d)"
 record_file="${record_dir}/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${workflow_label}.json"
 

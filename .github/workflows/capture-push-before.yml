@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore:
       - push-event-log
+      - path-event-log-*
 
 permissions:
   contents: write
