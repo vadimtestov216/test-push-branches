@@ -1,0 +1,107 @@
+name: Capture push before value
+
+on:
+  push:
+    branches-ignore:
+      - push-event-log
+
+permissions:
+  contents: write
+
+concurrency:
+  group: push-event-log
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    name: Capture push payload
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build event record
+        id: record
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          record_dir="$(mktemp -d)"
+          record_file="${record_dir}/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+
+          jq -n \
+            --arg repository "${GITHUB_REPOSITORY}" \
+            --arg event_name "${GITHUB_EVENT_NAME}" \
+            --arg ref "${GITHUB_REF}" \
+            --arg ref_name "${GITHUB_REF_NAME}" \
+            --arg sha "${GITHUB_SHA}" \
+            --arg before "${{ github.event.before }}" \
+            --arg after "${{ github.event.after }}" \
+            --arg run_id "${GITHUB_RUN_ID}" \
+            --arg run_attempt "${GITHUB_RUN_ATTEMPT}" \
+            --arg workflow "${GITHUB_WORKFLOW}" \
+            --arg actor "${GITHUB_ACTOR}" \
+            --arg created_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            '{
+              created_at: $created_at,
+              repository: $repository,
+              event_name: $event_name,
+              ref: $ref,
+              ref_name: $ref_name,
+              sha: $sha,
+              before: $before,
+              after: $after,
+              run_id: $run_id,
+              run_attempt: $run_attempt,
+              workflow: $workflow,
+              actor: $actor
+            }' > "${record_file}"
+
+          echo "record_file=${record_file}" >> "${GITHUB_OUTPUT}"
+
+      - name: Append record to log branch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LOG_BRANCH: push-event-log
+        run: |
+          set -euo pipefail
+
+          worktree="$(mktemp -d)"
+          remote_url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+          git clone --no-checkout "${remote_url}" "${worktree}"
+          cd "${worktree}"
+
+          if git ls-remote --exit-code --heads origin "${LOG_BRANCH}" >/dev/null 2>&1; then
+            git fetch origin "${LOG_BRANCH}"
+            git checkout "${LOG_BRANCH}"
+          else
+            git checkout --orphan "${LOG_BRANCH}"
+            git rm -rf . >/dev/null 2>&1 || true
+            printf '# Push event log\n\nThis branch is maintained by GitHub Actions.\n' > README.md
+          fi
+
+          mkdir -p records
+          cp "${{ steps.record.outputs.record_file }}" "records/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.json"
+          jq -c . "${{ steps.record.outputs.record_file }}" >> records/events.jsonl
+
+          {
+            printf '| created_at | ref_name | before | sha | after | run_id | attempt |\n'
+            printf '| --- | --- | --- | --- | --- | --- | --- |\n'
+            jq -r '[.created_at, .ref_name, .before, .sha, .after, .run_id, .run_attempt] | @tsv' records/events.jsonl |
+              while IFS=$'\t' read -r created_at ref_name before sha after run_id run_attempt; do
+                printf '| `%s` | `%s` | `%s` | `%s` | `%s` | `%s` | `%s` |\n' \
+                  "${created_at}" "${ref_name}" "${before}" "${sha}" "${after}" "${run_id}" "${run_attempt}"
+              done
+          } > records/events.md
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md records
+
+          if git diff --cached --quiet; then
+            echo "No log changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Record push event ${GITHUB_RUN_ID}.${GITHUB_RUN_ATTEMPT}"
+          git push origin "${LOG_BRANCH}"
