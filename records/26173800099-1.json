@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-20T15:50:08Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "event_name": "push",
+  "ref": "refs/heads/test-paths-v2/alpha-beta-batch",
+  "ref_name": "test-paths-v2/alpha-beta-batch",
+  "sha": "9743339d5e3254f6102e0afafde8b0552923f9f6",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "9743339d5e3254f6102e0afafde8b0552923f9f6",
+  "run_id": "26173800099",
+  "run_attempt": "1",
+  "workflow": "Capture push before value",
+  "actor": "vadimtestov216"
+}
