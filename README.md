@@ -14,3 +14,7 @@ The workflow captures:
 
 The log branch contains `records/events.jsonl`, one JSON object per run, plus a
 Markdown rendering in `records/events.md`.
+
+## Push sample 1
+
+First follow-up push at 2026-05-20T15:19:26Z UTC.
