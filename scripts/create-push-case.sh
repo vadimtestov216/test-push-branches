@@ -14,6 +14,7 @@ Create GitHub Actions push/path-filter investigation cases.
 Usage:
   scripts/create-push-case.sh linear [options]
   scripts/create-push-case.sh merge [options]
+  scripts/create-push-case.sh criss-cross-force [options]
 
 Global options:
   --base BRANCH        Base branch to start from. Default: main
@@ -26,6 +27,8 @@ linear options:
   --name NAME          Case name. Default: linear-<timestamp>
   --count N            Number of commits to create. Default: 10
   --paths CSV          Directory cycle. Default: alpha,beta,gamma
+  --blocks SPEC        Commit blocks instead of cycling paths.
+                       SPEC format: path:count,path:count,...
 
 merge options:
   --name NAME          Case name. Default: merge-<timestamp>
@@ -34,10 +37,18 @@ merge options:
   --head-path PATH     Optional final commit after the merge
   --head-count N       Number of final commits after the merge. Default: 0
 
+criss-cross-force options:
+  --name NAME          Case name. Default: criss-cross-<timestamp>
+  --left-path PATH     Path changed on the left side. Default: alpha
+  --right-path PATH    Path changed on the right side. Default: beta
+  --final-path PATH    Path changed only in the forced update. Default: gamma
+
 Examples:
   scripts/create-push-case.sh linear --name linear-350 --count 350 --paths alpha,beta,gamma
+  scripts/create-push-case.sh linear --name first-300-alpha --blocks alpha:300,gamma:50
   scripts/create-push-case.sh merge --name two-parent --parents alpha:3,beta:4
   scripts/create-push-case.sh merge --name octopus --parents alpha:2,beta:2,gamma:2 --head-path gamma --head-count 1
+  scripts/create-push-case.sh criss-cross-force --name multiple-merge-bases
 
 The script prints the local diff range GitHub is expected to use for the first
 push of a new branch: first-pushed-commit^..HEAD. For new branches, GitHub's
@@ -179,6 +190,7 @@ parse_global_option() {
 create_linear_case() {
   local name="linear-$(timestamp)"
   local count=10
+  local blocks_spec=""
 
   while [[ "$#" -gt 0 ]]; do
     parse_global_option "$@" && true
@@ -204,6 +216,11 @@ create_linear_case() {
         [[ "${#paths[@]}" -gt 0 ]] || die "--paths requires at least one path"
         shift 2
         ;;
+      --blocks)
+        blocks_spec="${2:-}"
+        [[ -n "${blocks_spec}" ]] || die "--blocks requires a value"
+        shift 2
+        ;;
       *)
         die "unknown linear option: $1"
         ;;
@@ -219,10 +236,28 @@ create_linear_case() {
   require_branch_absent "${branch}"
   checkout_case_branch "${branch}"
 
-  for ((i = 1; i <= count; i++)); do
-    local path="${paths[$(((i - 1) % ${#paths[@]}))]}"
-    commit_case_file "${path}" "${name}" "linear" "${i}"
-  done
+  if [[ -n "${blocks_spec}" ]]; then
+    local block_entries=()
+    local commit_index=1
+    IFS=',' read -r -a block_entries <<< "${blocks_spec}"
+
+    for entry in "${block_entries[@]}"; do
+      local path="${entry%%:*}"
+      local block_count="${entry#*:}"
+      [[ -n "${path}" && -n "${block_count}" && "${path}" != "${block_count}" ]] || die "bad block spec entry: ${entry}"
+      [[ "${block_count}" =~ ^[0-9]+$ && "${block_count}" -gt 0 ]] || die "block count must be positive: ${entry}"
+
+      for ((i = 1; i <= block_count; i++)); do
+        commit_case_file "${path}" "${name}" "linear-${path//\//-}" "${commit_index}"
+        commit_index=$((commit_index + 1))
+      done
+    done
+  else
+    for ((i = 1; i <= count; i++)); do
+      local path="${paths[$(((i - 1) % ${#paths[@]}))]}"
+      commit_case_file "${path}" "${name}" "linear" "${i}"
+    done
+  fi
 
   print_expected_range "${branch}"
   maybe_push "${branch}"
@@ -312,6 +347,120 @@ create_merge_case() {
   maybe_push "${branch}"
 }
 
+create_criss_cross_force_case() {
+  local name="criss-cross-$(timestamp)"
+  local left_path="alpha"
+  local right_path="beta"
+  local final_path="gamma"
+
+  while [[ "$#" -gt 0 ]]; do
+    parse_global_option "$@" && true
+    local consumed=$?
+    if [[ "${consumed}" -gt 0 ]]; then
+      shift "${consumed}"
+      continue
+    fi
+
+    case "$1" in
+      --name)
+        name="${2:-}"
+        [[ -n "${name}" ]] || die "--name requires a value"
+        shift 2
+        ;;
+      --left-path)
+        left_path="${2:-}"
+        [[ -n "${left_path}" ]] || die "--left-path requires a value"
+        shift 2
+        ;;
+      --right-path)
+        right_path="${2:-}"
+        [[ -n "${right_path}" ]] || die "--right-path requires a value"
+        shift 2
+        ;;
+      --final-path)
+        final_path="${2:-}"
+        [[ -n "${final_path}" ]] || die "--final-path requires a value"
+        shift 2
+        ;;
+      *)
+        die "unknown criss-cross-force option: $1"
+        ;;
+    esac
+  done
+
+  require_clean_tree
+  fetch_base
+
+  local branch="${branch_prefix}/${name}"
+  local left_branch="${branch}-left"
+  local right_branch="${branch}-right"
+  local base_ref="${remote}/${base_branch}"
+
+  require_branch_absent "${branch}"
+  require_branch_absent "${left_branch}"
+  require_branch_absent "${right_branch}"
+
+  git switch --no-track -c "${left_branch}" "${base_ref}"
+  commit_case_file "${left_path}" "${name}" "left" "1"
+  local left_first
+  left_first="$(git rev-parse HEAD)"
+
+  git switch --no-track -c "${right_branch}" "${base_ref}"
+  commit_case_file "${right_path}" "${name}" "right" "1"
+  local right_first
+  right_first="$(git rev-parse HEAD)"
+
+  git switch "${left_branch}"
+  git merge --no-ff --no-edit "${right_first}"
+  local left_tip
+  left_tip="$(git rev-parse HEAD)"
+
+  git switch "${right_branch}"
+  git merge --no-ff --no-edit "${left_first}"
+  local right_merge_tip
+  right_merge_tip="$(git rev-parse HEAD)"
+
+  commit_case_file "${final_path}" "${name}" "forced-final" "1"
+  local right_final_tip
+  right_final_tip="$(git rev-parse HEAD)"
+
+  git branch "${branch}" "${left_tip}"
+  git switch "${branch}"
+
+  echo
+  echo "Criss-cross case branch: ${branch}"
+  echo "Left first:              ${left_first}"
+  echo "Right first:             ${right_first}"
+  echo "Initial pushed tip:      ${left_tip}"
+  echo "Forced replacement tip:  ${right_final_tip}"
+  echo
+  echo "Merge bases between initial and forced tips:"
+  git merge-base --all "${left_tip}" "${right_final_tip}" | sed 's/^/  /'
+  echo
+  echo "Changed files for two-dot tree diff initial..forced:"
+  git diff --name-only "${left_tip}" "${right_final_tip}" | sed 's/^/  /'
+  echo
+  echo "Changed files from each merge-base to forced tip:"
+  while read -r merge_base; do
+    echo "  merge-base ${merge_base}:"
+    git diff --name-only "${merge_base}" "${right_final_tip}" | sed 's/^/    /'
+  done < <(git merge-base --all "${left_tip}" "${right_final_tip}")
+
+  if [[ "${push_branch}" -eq 1 ]]; then
+    git push -u "${remote}" "${branch}"
+    git branch -f "${branch}" "${right_final_tip}"
+    git switch "${branch}"
+    git push --force-with-lease "${remote}" "${branch}"
+  else
+    echo
+    echo "Skipped push. To run the force-push test manually:"
+    echo "  git push -u ${remote} ${branch}"
+    echo "  git branch -f ${branch} ${right_final_tip}"
+    echo "  git switch ${branch}"
+    echo "  git push --force-with-lease ${remote} ${branch}"
+  fi
+}
+
 main() {
   local command="${1:-}"
   [[ -n "${command}" ]] || {
@@ -326,6 +475,9 @@ main() {
       ;;
     merge)
       create_merge_case "$@"
+      ;;
+    criss-cross-force)
+      create_criss_cross_force_case "$@"
       ;;
     --help|-h|help)
       usage
