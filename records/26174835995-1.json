@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-20T16:08:46Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "event_name": "push",
+  "ref": "refs/heads/generated/long-alpha300-gamma50",
+  "ref_name": "generated/long-alpha300-gamma50",
+  "sha": "d719f1f5d83940e380868950bd6a5acc7960219e",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "d719f1f5d83940e380868950bd6a5acc7960219e",
+  "run_id": "26174835995",
+  "run_attempt": "1",
+  "workflow": "Capture push before value",
+  "actor": "vadimtestov216"
+}
