@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-05-20T16:10:59Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "workflow": "Path gamma",
+  "workflow_label": "gamma",
+  "event_name": "push",
+  "ref": "refs/heads/generated/criss-cross-multiple-bases",
+  "ref_name": "generated/criss-cross-multiple-bases",
+  "sha": "3baafd50e9a411c7b9bc44939cbb2e6101c40c97",
+  "before": "bcd2c354d255975c90e6de088c9ba9963d5bba6e",
+  "after": "3baafd50e9a411c7b9bc44939cbb2e6101c40c97",
+  "created": false,
+  "deleted": false,
+  "forced": true,
+  "compare": "https://github.com/vadimtestov216/test-push-branches/compare/bcd2c354d255...3baafd50e9a4",
+  "run_id": "26174918410",
+  "run_attempt": "1",
+  "actor": "vadimtestov216",
+  "commits_count": 2,
+  "commits": [
+    {
+      "id": "3762ca8c7f6c6ed9e8f226a55bb3d1be6a030dfb",
+      "message": "Merge commit 'ac71347d81096c15515097ee242af30773ad23e1' into generated/criss-cross-multiple-bases-right",
+      "added": [],
+      "modified": [],
+      "removed": []
+    },
+    {
+      "id": "3baafd50e9a411c7b9bc44939cbb2e6101c40c97",
+      "message": "Add criss-cross-multiple-bases forced-final 1",
+      "added": [],
+      "modified": [],
+      "removed": []
+    }
+  ]
+}
