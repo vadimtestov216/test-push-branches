@@ -6,3 +6,4 @@
 | `2026-05-21T06:24:54Z` | `gamma` | `generated/rename-alpha-to-gamma` | `69e229cc304ca85ef4dacff126119d9d8c0d0261` | `307c035b9dbaf96846c15192bd435b441c3a69ec` | `false` | `1` | `26209318605` |
 | `2026-05-21T06:25:06Z` | `gamma` | `generated/rollback-to-ancestor` | `0000000000000000000000000000000000000000` | `36d20056cfbee0ffc8e34bf9b0c26f723d52d5e6` | `true` | `3` | `26209327019` |
 | `2026-05-21T06:37:09Z` | `gamma` | `generated/criss-cross-reverse-bases` | `3b3a4b7f0ce1569d1863e32087945a2dcb7ec4ca` | `c5b89ba2e980dc338b63a52aad43424a266d5fca` | `false` | `1` | `26209802269` |
+| `2026-05-21T06:37:44Z` | `gamma` | `generated/criss-cross-reverse-bases-v2` | `3b3a4b7f0ce1569d1863e32087945a2dcb7ec4ca` | `596085d4e1ab8fbba6d6d70d3b2faba9568c550f` | `false` | `2` | `26209826183` |
