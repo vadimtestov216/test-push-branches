@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-05-21T06:24:59Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "workflow": "Path alpha",
+  "workflow_label": "alpha",
+  "event_name": "push",
+  "ref": "refs/heads/generated/rename-alpha-to-gamma",
+  "ref_name": "generated/rename-alpha-to-gamma",
+  "sha": "307c035b9dbaf96846c15192bd435b441c3a69ec",
+  "before": "69e229cc304ca85ef4dacff126119d9d8c0d0261",
+  "after": "307c035b9dbaf96846c15192bd435b441c3a69ec",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "compare": "https://github.com/vadimtestov216/test-push-branches/compare/69e229cc304c...307c035b9dba",
+  "run_id": "26209318651",
+  "run_attempt": "1",
+  "actor": "vadimtestov216",
+  "commits_count": 1,
+  "commits": [
+    {
+      "id": "307c035b9dbaf96846c15192bd435b441c3a69ec",
+      "message": "Rename alpha file to gamma\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "added": [],
+      "modified": [],
+      "removed": []
+    }
+  ]
+}
