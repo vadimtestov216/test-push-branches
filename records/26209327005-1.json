@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-21T06:25:05Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "event_name": "push",
+  "ref": "refs/heads/generated/rollback-to-ancestor",
+  "ref_name": "generated/rollback-to-ancestor",
+  "sha": "36d20056cfbee0ffc8e34bf9b0c26f723d52d5e6",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "36d20056cfbee0ffc8e34bf9b0c26f723d52d5e6",
+  "run_id": "26209327005",
+  "run_attempt": "1",
+  "workflow": "Capture push before value",
+  "actor": "vadimtestov216"
+}
