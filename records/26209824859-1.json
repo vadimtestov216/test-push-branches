@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-21T06:37:40Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "event_name": "push",
+  "ref": "refs/heads/generated/criss-cross-reverse-bases-v2",
+  "ref_name": "generated/criss-cross-reverse-bases-v2",
+  "sha": "3b3a4b7f0ce1569d1863e32087945a2dcb7ec4ca",
+  "before": "0000000000000000000000000000000000000000",
+  "after": "3b3a4b7f0ce1569d1863e32087945a2dcb7ec4ca",
+  "run_id": "26209824859",
+  "run_attempt": "1",
+  "workflow": "Capture push before value",
+  "actor": "vadimtestov216"
+}
