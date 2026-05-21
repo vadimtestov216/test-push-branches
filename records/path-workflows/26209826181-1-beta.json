@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-05-21T06:37:43Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "workflow": "Path beta",
+  "workflow_label": "beta",
+  "event_name": "push",
+  "ref": "refs/heads/generated/criss-cross-reverse-bases-v2",
+  "ref_name": "generated/criss-cross-reverse-bases-v2",
+  "sha": "596085d4e1ab8fbba6d6d70d3b2faba9568c550f",
+  "before": "3b3a4b7f0ce1569d1863e32087945a2dcb7ec4ca",
+  "after": "596085d4e1ab8fbba6d6d70d3b2faba9568c550f",
+  "created": false,
+  "deleted": false,
+  "forced": true,
+  "compare": "https://github.com/vadimtestov216/test-push-branches/compare/3b3a4b7f0ce1...596085d4e1ab",
+  "run_id": "26209826181",
+  "run_attempt": "1",
+  "actor": "vadimtestov216",
+  "commits_count": 2,
+  "commits": [
+    {
+      "id": "88b0944a49bb85165fc95a20013ee2bf4f5eb684",
+      "message": "Merge commit 'b2632be2faf8dadd7bc74de95ee0721d276ef594' into generated/criss-cross-reverse-bases-left",
+      "added": [],
+      "modified": [],
+      "removed": []
+    },
+    {
+      "id": "596085d4e1ab8fbba6d6d70d3b2faba9568c550f",
+      "message": "Add criss-cross-reverse-bases-v2 final gamma\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "added": [],
+      "modified": [],
+      "removed": []
+    }
+  ]
+}
