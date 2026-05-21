@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-05-21T06:24:58Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "event_name": "push",
+  "ref": "refs/heads/generated/rename-alpha-to-gamma",
+  "ref_name": "generated/rename-alpha-to-gamma",
+  "sha": "307c035b9dbaf96846c15192bd435b441c3a69ec",
+  "before": "69e229cc304ca85ef4dacff126119d9d8c0d0261",
+  "after": "307c035b9dbaf96846c15192bd435b441c3a69ec",
+  "run_id": "26209318607",
+  "run_attempt": "1",
+  "workflow": "Capture push before value",
+  "actor": "vadimtestov216"
+}
