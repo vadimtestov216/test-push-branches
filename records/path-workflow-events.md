@@ -7,3 +7,4 @@
 | `2026-05-20T16:10:17Z` | `alpha` | `generated/criss-cross-multiple-bases` | `0000000000000000000000000000000000000000` | `bcd2c354d255975c90e6de088c9ba9963d5bba6e` | `true` | `3` | `26174906304` |
 | `2026-05-20T16:10:26Z` | `alpha` | `generated/criss-cross-multiple-bases` | `bcd2c354d255975c90e6de088c9ba9963d5bba6e` | `3baafd50e9a411c7b9bc44939cbb2e6101c40c97` | `false` | `2` | `26174918221` |
 | `2026-05-20T16:22:26Z` | `alpha` | `generated/force-single-merge-base` | `0000000000000000000000000000000000000000` | `15954058b7f0fcc2b357486182a27aa02bf6c20d` | `true` | `1` | `26175355402` |
+| `2026-05-21T06:14:59Z` | `alpha` | `generated/delete-alpha-check` | `0000000000000000000000000000000000000000` | `fb1c58d45ddd94e05487a69972758032a9c52090` | `true` | `1` | `26208956368` |
