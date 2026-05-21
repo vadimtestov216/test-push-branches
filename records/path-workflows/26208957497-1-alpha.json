@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-05-21T06:15:10Z",
+  "repository": "vadimtestov216/test-push-branches",
+  "workflow": "Path alpha",
+  "workflow_label": "alpha",
+  "event_name": "push",
+  "ref": "refs/heads/generated/delete-alpha-check",
+  "ref_name": "generated/delete-alpha-check",
+  "sha": "d2ede6c161a4b93c85f960cfc04dbd0593a73109",
+  "before": "fb1c58d45ddd94e05487a69972758032a9c52090",
+  "after": "d2ede6c161a4b93c85f960cfc04dbd0593a73109",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "compare": "https://github.com/vadimtestov216/test-push-branches/compare/fb1c58d45ddd...d2ede6c161a4",
+  "run_id": "26208957497",
+  "run_attempt": "1",
+  "actor": "vadimtestov216",
+  "commits_count": 1,
+  "commits": [
+    {
+      "id": "d2ede6c161a4b93c85f960cfc04dbd0593a73109",
+      "message": "Delete alpha check file\n\nCo-authored-by: Cursor <cursoragent@cursor.com>",
+      "added": [],
+      "modified": [],
+      "removed": []
+    }
+  ]
+}
