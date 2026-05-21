@@ -11,3 +11,4 @@
 | `2026-05-21T06:15:10Z` | `alpha` | `generated/delete-alpha-check` | `fb1c58d45ddd94e05487a69972758032a9c52090` | `d2ede6c161a4b93c85f960cfc04dbd0593a73109` | `false` | `1` | `26208957497` |
 | `2026-05-21T06:24:51Z` | `alpha` | `generated/rename-alpha-to-gamma` | `0000000000000000000000000000000000000000` | `69e229cc304ca85ef4dacff126119d9d8c0d0261` | `true` | `1` | `26209317080` |
 | `2026-05-21T06:24:59Z` | `alpha` | `generated/rename-alpha-to-gamma` | `69e229cc304ca85ef4dacff126119d9d8c0d0261` | `307c035b9dbaf96846c15192bd435b441c3a69ec` | `false` | `1` | `26209318651` |
+| `2026-05-21T06:25:07Z` | `alpha` | `generated/rollback-to-ancestor` | `0000000000000000000000000000000000000000` | `36d20056cfbee0ffc8e34bf9b0c26f723d52d5e6` | `true` | `3` | `26209326982` |
